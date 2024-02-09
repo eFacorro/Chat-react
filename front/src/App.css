@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  width: 75%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+nav > span {
+  cursor: pointer;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+.App {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+}
+
+.App > div{
+  height: 500px;
+  width: 550px;
+  background-color: gray;
+  display: flex;
+  align-content: flex-end;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.App > div > div > input{
+  width: 480px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: lightgray;
+}
+
+form > span {
+  color: red;
+  display: none;
+}
+
+form > a {
+  display: block;
+  margin: -15px;
+  color: #2e3b6aa8;
+  text-decoration: none;
+}

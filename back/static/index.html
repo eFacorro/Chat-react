@@ -1,0 +1,30 @@
+<script>
+  function wsInit(wsUrl){
+    let ws = new WebSocket(wsUrl);
+
+    ws.onopen = function(e) {
+      ws.send("test"); // poner aqui autentificacion
+    };
+    
+    ws.onmessage = function(event) {
+      console.log(`[message] Datos recibidos del servidor: ${event.data}`);
+    };
+    
+    ws.onclose = function(event) {
+      if (event.wasClean) {
+        console.log(`[close] Conexión cerrada limpiamente, código=${event.code} motivo=${event.reason}`);
+      } else {
+        console.log('[close] La conexión se cayó');
+      }
+    };
+    
+    ws.onerror = function(error) {
+      console.log(`[error]`);
+      // url = "wss://chat-websocket-hzgo.onrender.com";  // hacerlo rotativo
+      // wsInit(url);  // reconectar ws
+    };
+  }
+  let url = "ws://localhost:7071";
+  wsInit(url);
+
+</script>
