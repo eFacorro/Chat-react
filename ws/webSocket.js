@@ -10,26 +10,33 @@ wss.on('connection', (ws) => {
   clients.set(ws, metadata); 
 
   ws.on('message', (messageAsString) => {
-    const message = JSON.parse(messageAsString);
-    //const message = messageAsString.toString()
-    const metadata = clients.get(ws);
-    if(metadata.name === ""){
-      metadata.name = message.data.name;
-      clients.delete(ws);
-      clients.set(ws, metadata);
-      console.log("conection", metadata);
-      return
-    }
-    console.log(metadata)
-
-    const outbound = JSON.stringify(message); // messageAsString;
-
-    [...clients.keys()].forEach((client) => {
-      if(client != ws){
-        client.send(outbound);
+    try{
+      let message = JSON.parse(messageAsString);
+      if (message.msg !== ""){
+        const metadata = clients.get(ws);
+        if(metadata.name === ""){
+          metadata.name = message.data.name;
+          clients.delete(ws);
+          clients.set(ws, metadata);
+          console.log("conection", metadata);
+          return
+        }
+        console.log(metadata);
+        message.user = metadata.name;
+        const outbound = JSON.stringify(message); // messageAsString;
+        
         console.log(outbound);
+        [...clients.keys()].forEach((client) => {
+          tempMetadata = clients.get(client);
+          if(client != ws && tempMetadata.name !== ""){
+            client.send(outbound);
+          }
+        });
       }
-    });
+    }
+    catch{
+      console.log("error")
+    }
   });
   ws.on("close", () => {
     const metadata = clients.get(ws);
@@ -38,7 +45,6 @@ wss.on('connection', (ws) => {
   });
 });
 console.log("wss up");
-
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

@@ -36,7 +36,24 @@ body {
   justify-content: center;
 }
 
-.App > div > div > input{
+.chat {
+  width: 95%;
+}
+
+.enviado {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.envio {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+}
+
+.envio > input {
   width: 480px;
 }
 

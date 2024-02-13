@@ -1,15 +1,9 @@
-import React, {useState} from "react";
-// import { wsSend } from "../js/helpers";
+import React from "react";
 
-export default function Enviar(sendJsonMessage){
-  let [msg, setMsg] = useState("");
-  const enviar = () => {
-    sendJsonMessage({msg: msg});
-    setMsg("");
-  }
+export default function Enviar({enviar, msg, setMsg}){
   return (
-    <div>
-      <input type="text" value={msg} onChange={(e) => {setMsg(e.target.value);}}/> <button onClick={enviar}>Enviar</button>
-    </div>
+    <>
+      <input type="text" value={msg} onChange={(e) => {setMsg(e.target.value);}} onKeyDown={(e) => e.code === "Enter" ? enviar() : ""}/> <button onClick={enviar}>Enviar</button>
+    </>
   )
 }
