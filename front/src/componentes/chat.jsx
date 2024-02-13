@@ -11,4 +11,4 @@ export default function Chat(){
       <Enviar />
     </div>
   )
-}
+} 
