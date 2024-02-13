@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import { wsSend } from "../js/helpers";
+// import { wsSend } from "../js/helpers";
 
-export default function Enviar(){
+export default function Enviar(sendJsonMessage){
   let [msg, setMsg] = useState("");
   const enviar = () => {
-    wsSend(msg);
+    sendJsonMessage({msg: msg});
     setMsg("");
   }
   return (

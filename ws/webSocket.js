@@ -3,7 +3,6 @@ const wss = new WebSocket.Server({ port: 7071 });
 const clients = new Map();
 
 wss.on('connection', (ws) => {
-  setTimeout(() => {expire(ws)},5000);
   const id = uuidv4();
   let name = "";
   let metadata = { id , name};
@@ -11,12 +10,11 @@ wss.on('connection', (ws) => {
   clients.set(ws, metadata); 
 
   ws.on('message', (messageAsString) => {
-    // const message = JSON.parse(messageAsString);
-    const message = messageAsString.toString()
+    const message = JSON.parse(messageAsString);
+    //const message = messageAsString.toString()
     const metadata = clients.get(ws);
     if(metadata.name === ""){
-      clearTimeout(metadata.timeClient)
-      metadata.name = message;
+      metadata.name = message.data.name;
       clients.delete(ws);
       clients.set(ws, metadata);
       console.log("conection", metadata);
@@ -24,12 +22,12 @@ wss.on('connection', (ws) => {
     }
     console.log(metadata)
 
-    const outbound = message; // messageAsString;
+    const outbound = JSON.stringify(message); // messageAsString;
 
     [...clients.keys()].forEach((client) => {
       if(client != ws){
-        client.send(`${metadata.name} > ${outbound}`);
-        console.log(`${metadata.name} > ${outbound}`);
+        client.send(outbound);
+        console.log(outbound);
       }
     });
   });
@@ -47,11 +45,4 @@ function uuidv4() {
     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
-}
-
-function expire(ws){
-  const metadata = clients.get(ws);
-  if(metadata.name === ""){
-    ws.close();
-  }
 }
