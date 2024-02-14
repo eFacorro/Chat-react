@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket"
 import Enviar from "./enviar";
-import Conectarse from "./conectarse";
 
-export default function Chat() {
+export default function Chat({user}) {
   let [msg, setMsg] = useState("");
   let [keyId, setKeyId] = useState(0);
   let [chat, setChat] = useState([]);
-  const WS_URL = "ws://localhost:7071"
+  const WS_URL = "wss://ws-chat-react.onrender.com/"
   const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
     WS_URL,
     {
@@ -19,13 +18,13 @@ export default function Chat() {
   useEffect(() => {
     console.log("Connection state changed")
     if (readyState === ReadyState.OPEN) {
-      // sendJsonMessage({
-      //   event: "subscribe",
-      //   data: {
-      //     channel: "general-chatroom",
-      //     name: "test"
-      //   },
-      // })
+      sendJsonMessage({
+        event: "subscribe",
+        data: {
+          channel: "general-chatroom",
+          name: user
+        },
+      })
     }
   }, [readyState]);
 
@@ -56,7 +55,6 @@ export default function Chat() {
       <div className="envio">
         <Enviar enviar={enviar} msg={msg} setMsg={setMsg}/>
       </div>
-      <Conectarse sendJsonMessage={sendJsonMessage} />
     </div>
   )
 }

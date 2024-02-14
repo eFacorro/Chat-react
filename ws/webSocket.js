@@ -5,7 +5,7 @@ const clients = new Map();
 wss.on('connection', (ws) => {
   const id = uuidv4();
   let name = "";
-  let metadata = { id , name};
+  let metadata = {id, name};
   console.log("connection");
   clients.set(ws, metadata); 
 
@@ -23,7 +23,7 @@ wss.on('connection', (ws) => {
         }
         console.log(metadata);
         message.user = metadata.name;
-        const outbound = JSON.stringify(message); // messageAsString;
+        const outbound = JSON.stringify(message);
         
         console.log(outbound);
         [...clients.keys()].forEach((client) => {

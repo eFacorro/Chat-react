@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import Chat from './componentes/chat'; 
+import Conectarse from './componentes/conectarse';
 
 
 function App() {
  
   return (
     <div className="App">
-      <Chat />
+      <Conectarse />
     </div>
   );
 }
