@@ -7,7 +7,7 @@ export default function Conectarse({sendJsonMessage}){
     
   return (
     <>
-      <input type="text" value={user} onChange={(e) => {setUser(e.target.value)}} onKeyDown={(e) => e.code === "Enter" ? setConectarse(true) : ""} disabled={conectarse}/>
+      Nombre en el chat<input type="text" value={user} onChange={(e) => {setUser(e.target.value)}} onKeyDown={(e) => e.code === "Enter" ? setConectarse(true) : ""} disabled={conectarse}/>
       {!conectarse && <button onClick={() => setConectarse(true)}>Conectarse</button>}
       {conectarse && <Chat user={user}/>}
     </>
